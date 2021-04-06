@@ -16,7 +16,7 @@ import shutil
 import subprocess
 import argparse
 
-cwd = os.getcwd()
+
 # print("current working directory:", cwd)
 # file_list = os.walk(os.getcwd())
 # print("this are the files:", file_list)
@@ -29,16 +29,17 @@ cwd = os.getcwd()
 def get_special_paths(dirname):
     """Given a dirname, returns a list of all its special files."""
     dir_list = os.listdir(dirname)
-    name = r"[\w+[__w__]\w+]"
-    print(dir_list)
-    # matches = re.findall(name, dir_list)
-    for file_name in dir_list:
-        print(file_name)
+    pattern = r"__\w+__"
+    file_list = []
+    for filename in dir_list:
+        match = re.search(pattern, filename)
+        if match:
+            file_list.append(os.path.abspath(os.path.join(dirname, filename)))
+    return file_list
 
 
 def copy_to(path_list, dest_dir):
-    # your code here
-    return
+    print(path_list)
 
 
 def zip_to(path_list, dest_zip):
@@ -68,10 +69,10 @@ def main(args):
         parser.print_usage()
         sys.exit(1)
 
-    dir_list = ns.from_dir
-
     # Your code here: Invoke (call) your functions
-    get_special_paths(dir_list)
+    special_paths = get_special_paths(ns.from_dir)
+    for path in special_paths:
+        print(path)
 
 
 if __name__ == "__main__":
