@@ -17,15 +17,6 @@ import subprocess
 import argparse
 
 
-# print("current working directory:", cwd)
-# file_list = os.walk(os.getcwd())
-# print("this are the files:", file_list)
-# pattern = r"[__w__]"
-# for items in file_list:
-#     if pattern in items:
-#         print(items)
-
-
 def get_special_paths(dirname):
     """Given a dirname, returns a list of all its special files."""
     dir_list = os.listdir(dirname)
