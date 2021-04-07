@@ -39,12 +39,17 @@ def get_special_paths(dirname):
 
 
 def copy_to(path_list, dest_dir):
-    print(path_list)
+    if not os.path.isdir(dest_dir):
+        os.makedirs(dest_dir)
+    for path in path_list:
+        shutil.copy(path, dest_dir)
 
 
 def zip_to(path_list, dest_zip):
     # your code here
-    return
+    cmd = ["zip", "-j", dest_zip]
+    cmd.extend(path_list)
+    subprocess.check_output(cmd)
 
 
 def main(args):
@@ -71,8 +76,16 @@ def main(args):
 
     # Your code here: Invoke (call) your functions
     special_paths = get_special_paths(ns.from_dir)
-    for path in special_paths:
-        print(path)
+
+    if ns.todir:
+        copy_to(special_paths, ns.todir)
+
+    elif ns.tozip:
+        print(f"I am going to : ")
+        zip_to(special_paths, ns.tozip)
+    else:
+        for path in special_paths:
+            print(path)
 
 
 if __name__ == "__main__":
